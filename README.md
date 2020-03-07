@@ -47,7 +47,9 @@ Here are some example queries and what they would return:
 
 | Query                                                                                | Description                                             |
 |-----------------------------------------------------------------------------------------|---------------------------------------------------------|
-| `http://localhost:4000/api/users?where={"_id": "55099652e5993a350458b7b7"}`         | Returns a list with a single user with the specified ID |
+| `http://localhost:4000/api/tasks`                          | Returns full list of  tasks                       |
+| `http://localhost:4000/api/users`                          | Returns full list of users                       |
+| `http://localhost:4000/api/users?where={"_id": "55099652e5993a350458b7b7"}`         | Returns a list with a single user with the specified ID ('_id' will be different) |
 | `http://localhost:4000/api/tasks?where={"completed": true}`                          | Returns a list of completed tasks                       |
 | `http://localhost:4000/api/tasks?where={"_id": {"$in": ["59f930d6b1596b0cb3e82953","5a1b6d7bd72ba9106fe9239c"]}}` | Returns a set of tasks                                  |
 | `http://localhost:4000/api/users?sort={"name": 1}`                                  | Returns a list of users sorted by name                  |
