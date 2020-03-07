@@ -3,12 +3,12 @@
 
 ## Table of Contents
 1. [Assignment](#assignment)
-2. [Tips](#tips)
-3. [Rules](#rules)
-4. [Environment Setup Guide](#getting-started)
+2. [Getting Stard](#getting-started)
+3. [Tips](#tips)
+4. [Rules](#rules)
 5. [Submission Details](#submission-details)
 
-## Assignment
+## 1. Assignment
 
 **The Basic Goal** : Create an API for a task management / todo list.
 
@@ -107,7 +107,17 @@ Here is the Task Schema:
     - Multiple users with the same email cannot exist.
     - Tasks cannot be created (or updated) without a name or a deadline. All other fields that the user did not specify should be set to reasonable values.
 
-## Tips and Attention!
+## 2. Getting Started
+1. Clone the repository:
+`git clone https://gitlab.com/uiuc-web-programming/mp3.git mp3`, then `cd mp3`
+2. Install dependencies:
+`npm install`
+3. Start the dev server:
+`npm start` or 
+`nodemon --exec node server.js` to automatically restart the server on save.
+
+
+## 3. Tips
   - Start early!
   - Please DO NOT delete the `.gitignore file` from the project, you will lose 1% point 
   - Check out [Postman](https://www.getpostman.com/postman) to your API
@@ -140,18 +150,6 @@ Contains sample task descriptions. Edit if you want, I don't care.
 1. This is an individual assignment. No collaboration is permitted.
 2. It is not permitted to copy/paste code that is not your own. You are, however, free to look at different code sources for inspiration and clarity. All sources (code as well as reading material) that you reference to complete this assignment must be declared in the submission.
 3. If you think something you’re doing might not be acceptable, please ask on Piazza.
-
-
-
-## Getting Started
-1. Clone the repository:
-`git clone https://gitlab.com/uiuc-web-programming/mp3.git mp3`, then `cd mp3`
-2. Install dependencies:
-`npm install`
-3. Start the dev server:
-`npm start` or 
-`nodemon --exec node server.js` to automatically restart the server on save.
-
 
 
 ## Submission Details
