@@ -1,11 +1,11 @@
 # MP #3: APIed Piper
-### Due: April 1st, 2019, 11.59PM CDT
+### Due: April 1st, 2020, 11.59PM CDT
 
 ## Table of Contents
 1. [Assignment](#assignment)
 2. [Tips](#tips)
 3. [Rules](#rules)
-4. [Environment Setup Guide](#environment-setup-guide)
+4. [Environment Setup Guide](#getting-started)
 5. [Submission Details](#submission-details)
 
 ## Assignment
@@ -109,11 +109,11 @@ Here is the Task Schema:
 
 ## Tips and Attention!
   - Start early!
-  - Please DO NOT delete the `.gitignore file` from the project, -1% 
+  - Please DO NOT delete the `.gitignore file` from the project, you will lose 1% point 
   - Check out [Postman](https://www.getpostman.com/postman) to your API
-  - Free MongoDB - [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
-  - You don't need to host anywhere, we will check out your code locally
-  - The example queries above will cover 70% grade, and 30% of corner test cases will not be released.
+  - Free MongoDB server - [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+  - You don't need to host anywhere, we will check out your code locally, be sure to run your MongoDB server all the time
+  - The example queries above will cover 70% grade, and another 30% of corner test cases will not be released.
 
 ### How to use the DB Scripts
 
