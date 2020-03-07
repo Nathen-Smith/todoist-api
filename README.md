@@ -152,4 +152,4 @@ Contains sample task descriptions. Edit if you want, I don't care.
 `nodemon --exec node server.js` to automatically restart the server on save.
 
 ## Submission Details
-[Submission Form](https://uiucwp.typeform.com/to/AYLFmM)
+[Submission Form](https://forms.gle/ARkKhDApLCZc6Kgi6)
