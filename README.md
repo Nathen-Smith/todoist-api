@@ -1,5 +1,5 @@
 # MP #3: APIed Piper
-### Due: April 8st, 2020, 11.59PM CDT
+### Due: April 17st, 2020, 11.59PM CDT
 
 ## Table of Contents
 1. [Assignment](#assignment)
