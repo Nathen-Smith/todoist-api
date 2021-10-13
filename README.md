@@ -3,7 +3,7 @@
 
 ## Table of Contents
 1. [Assignment](#assignment)
-2. [Getting Stard](#getting-started)
+2. [Getting Started](#getting-started)
 3. [Tips](#tips)
 4. [Rules](#rules)
 5. [Submission Details](#submission-details)
