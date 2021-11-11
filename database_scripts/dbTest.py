@@ -11,16 +11,16 @@ headers = {"Content-type": "application/x-www-form-urlencoded",
            "Accept": "text/plain"}
 
 
-params = urllib.parse.urlencode(
-    {'name': 'nath' + " " + 'ensmiff', 'email': 'nath' + "@" + 'ensmiff' + ".com"})
+# params = urllib.parse.urlencode(
+#     {'name': 'nath' + " " + 'ensmiff', 'email': 'nath' + "@" + 'ensmiff' + ".com"})
 
-conn.request("POST", "/api/users", params, headers)
+# conn.request("POST", "/api/users", params, headers)
 # assignedUserID = "6189f1d49d8f19532da5a53a"
 
 # conn.request("GET", """/api/users?where={"_id":\""""+assignedUserID+"""\"}""")
-response = conn.getresponse()
-data = response.read()
-d = json.loads(data)
+# response = conn.getresponse()
+# data = response.read()
+# d = json.loads(data)
 
 # # Store all the user properties
 # assignedUserName = str(d['data'][0]['name'])
@@ -43,6 +43,19 @@ d = json.loads(data)
 #             response = conn.getresponse()
 #             data = response.read()
 #             d = json.loads(data)
+
+
+# assignedUserID = "6189ea37fc904f51a6324f89"
+assignedUserID = "6189f1d49d8f19532da5a53a"
+
+assignedUserName = "bobba"
+
+params = urllib.parse.urlencode(
+    {'_id': assignedUserID, 'name': assignedUserName}, True)
+conn.request("PUT", "/api/users/"+assignedUserID, params, headers)
+response = conn.getresponse()
+data = response.read()
+d = json.loads(data)
 
 
 print(d)
