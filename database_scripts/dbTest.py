@@ -45,14 +45,12 @@ headers = {"Content-type": "application/x-www-form-urlencoded",
 #             d = json.loads(data)
 
 
-# assignedUserID = "6189ea37fc904f51a6324f89"
-# assignedUserID = "6189f1d49d8f19532da5a53a"
-assignedUserID = "6189f1fd3ab20a533d2fa70e"
+assignedUserID = "618db3c856be2ccb8d9e7204"
 
 assignedUserName = "bobba"
 
 params = urllib.parse.urlencode(
-    {'_id': assignedUserID, 'name': assignedUserName, 'email': "bob@bob.com"}, True)
+    {'_id': assignedUserID, 'name': assignedUserName, 'email': "bob2@bob.com"}, True)
 conn.request("PUT", "/api/users/"+assignedUserID, params, headers)
 response = conn.getresponse()
 data = response.read()

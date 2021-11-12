@@ -28,14 +28,14 @@ module.exports = function (router) {
       // query params for GET users
       const query = buildQuery(User, req.query);
       query.exec(function (err, usersQuery) {
-        if (err) return handle400(res, err);
-        else if (!usersQuery || usersQuery.length === 0) return handle404(res);
+        if (err) handle400(res, err);
+        else if (!usersQuery || usersQuery.length === 0) handle404(res);
         else handle200(res, usersQuery);
       });
     } else {
       User.find({}, function (err, users) {
-        if (err) return handle500(res, err);
-        else if (!users) return handle404(res);
+        if (err) handle500(res, err);
+        else if (!users) handle404(res);
         else handle200(res, users);
       });
     }
@@ -47,7 +47,7 @@ module.exports = function (router) {
       const createdUser = await User.create(newUser);
       handle201(res, createdUser);
     } catch (err) {
-      return handle400(res, err);
+      handle400(res, err);
     }
   });
 
@@ -56,7 +56,7 @@ module.exports = function (router) {
       const user = await User.findById(req.params.id);
       handle200(res, user);
     } catch {
-      return handle404(res);
+      handle404(res);
     }
   });
 
@@ -80,7 +80,7 @@ module.exports = function (router) {
       if (!user || user.length === 0) throw new Error();
       handle204(res);
     } catch {
-      return handle404(res);
+      handle404(res);
     }
   });
 
