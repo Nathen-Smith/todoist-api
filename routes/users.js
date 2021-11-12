@@ -1,9 +1,7 @@
-const { mongo_connection } = require("../config/secrets");
 const { User } = require("../models/user");
-var secrets = require("../config/secrets");
+
 const {
   buildQuery,
-  buildRes,
   handle500,
   handle404,
   handle400,
@@ -13,12 +11,15 @@ const {
   handleReplace,
 } = require("./exports");
 
+const userProperties = ["name", "email", "pendingTasks"];
+
 function getParams(query) {
   let newUser = new Object();
-  query.name && (newUser.name = query.name);
-  query.email && (newUser.email = query.email);
-  query.pendingTasks && (newUser.pendingTasks = query.pendingTasks);
-  query.dateCreated && (newUser.dateCreated = query.dateCreated);
+  userProperties.map((prop) => {
+    if (query.hasOwnProperty(prop)) {
+      newUser[prop] = query[prop];
+    }
+  });
   return newUser;
 }
 
@@ -78,7 +79,7 @@ module.exports = function (router) {
     try {
       const user = await User.findByIdAndDelete(req.params.id);
       if (!user || user.length === 0) throw new Error();
-      handle204(res);
+      handleDelete(res);
     } catch {
       handle404(res);
     }
