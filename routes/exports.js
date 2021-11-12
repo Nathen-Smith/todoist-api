@@ -17,20 +17,42 @@ function buildRes(message, data) {
   return { message: message, data: data };
 }
 
-function handleError(res, err) {
-  res.status(500).json(buildRes("error 500", err));
+function handle500(res, err) {
+  res.status(500).json(buildRes("SERVER ERROR", err));
 }
 
-const errNotFound = { message: "NOT FOUND", data: "" };
+function handle404(res) {
+  res.status(404).json(buildRes("NOT FOUND", ""));
+}
 
-function handleNotFound(res) {
-  res.status(404).json(errNotFound);
+function handle400(res, err) {
+  res.status(400).json(buildRes("BAD REQUEST", err));
+}
+
+function handle200(res, data) {
+  res.status(200).json(buildRes("OK", data));
+}
+
+function handle201(res, data) {
+  res.status(201).json(buildRes("CREATED", data));
+}
+
+function handleDelete(res) {
+  res.status(200).json(buildRes("DELETED", ""));
+}
+
+function handleReplace(res, data) {
+  res.status(200).json(buildRes("REPLACED USER:", data));
 }
 
 module.exports = {
   buildQuery,
   buildRes,
-  handleError,
-  errNotFound,
-  handleNotFound,
+  handle500,
+  handle404,
+  handle400,
+  handle200,
+  handle201,
+  handleDelete,
+  handleReplace,
 };
