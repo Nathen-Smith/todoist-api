@@ -78,14 +78,15 @@ module.exports = function (router) {
   router.route("/tasks/:id").put(async function (req, res) {
     try {
       const checkTask = await Task.findById(req.params.id);
-      if (!checkTask || checkTask.length === 0) throw new Error();
+      if (!checkTask || checkTask.length === 0) throw new Error("NOT FOUND");
       const replacedTask = await Task.findOneAndReplace(
         { _id: req.params.id },
         req.body
       );
       handleReplace(res, replacedTask);
-    } catch {
-      handle404(res);
+    } catch (err) {
+      if (err.message === "NOT FOUND") handle404(res);
+      else handle400(res, err);
     }
   });
 

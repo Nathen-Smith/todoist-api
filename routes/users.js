@@ -67,14 +67,15 @@ module.exports = function (router) {
   router.route("/users/:id").put(async function (req, res) {
     try {
       const checkUser = await User.findById(req.params.id);
-      if (!checkUser) throw new Error();
+      if (!checkUser) throw new Error("NOT FOUND");
       const replacedUser = await User.findOneAndReplace(
         { _id: req.params.id },
         req.body
       );
       handleReplace(res, replacedUser);
-    } catch {
-      handle404(res);
+    } catch (err) {
+      if (err.message === "NOT FOUND") handle404(res);
+      else handle400(res, err);
     }
   });
 
