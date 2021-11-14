@@ -66,13 +66,13 @@ module.exports = function (router) {
   });
 
   router.route("/tasks/:id").get(async function (req, res) {
-    try {
-      const task = await Task.findById(req.params.id);
-      if (!task || task.length === 0) throw new Error();
-      handle200(res, task);
-    } catch {
-      handle404(res);
-    }
+    const task = Task.findById(req.params.id);
+    if (req.query.select) task.select(JSON.parse(req.query.select));
+    task.exec(function (err, returnedTask) {
+      if (err) handle500(res, err);
+      else if (!returnedTask) handle404(res);
+      else handle200(res, returnedTask);
+    });
   });
 
   router.route("/tasks/:id").put(async function (req, res) {

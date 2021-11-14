@@ -55,13 +55,13 @@ module.exports = function (router) {
   });
 
   router.route("/users/:id").get(async function (req, res) {
-    try {
-      const user = await User.findById(req.params.id);
-      if (!user || user.length === 0) throw new Error();
-      handle200(res, user);
-    } catch {
-      handle404(res);
-    }
+    const user = User.findById(req.params.id);
+    if (req.query.select) user.select(JSON.parse(req.query.select));
+    user.exec(function (err, returnedUser) {
+      if (err) handle500(res, err);
+      else if (!returnedUser) handle404(res);
+      else handle200(res, returnedUser);
+    });
   });
 
   router.route("/users/:id").put(async function (req, res) {
