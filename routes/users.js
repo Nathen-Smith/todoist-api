@@ -31,14 +31,14 @@ module.exports = function (router) {
       const query = buildQuery(User, req.query);
       query.exec(function (err, usersQuery) {
         if (err) handle400(res, err);
-        else if (!usersQuery || usersQuery.length === 0)
-          handle404(res, "No results returned.");
+        else if (!usersQuery || usersQuery.length === 0) handle404(res);
         else handle200(res, usersQuery);
       });
     } else {
       User.find({}, function (err, users) {
+        console.log(users);
         if (err) handle500(res, err);
-        else if (!users) handle404(res, "No results returned.");
+        else if (!users || users.length === 0) handle404(res);
         else handle200(res, users);
       });
     }
@@ -57,17 +57,17 @@ module.exports = function (router) {
   router.route("/users/:id").get(async function (req, res) {
     try {
       const user = await User.findById(req.params.id);
-      if (!user || user.length === 0) throw new Error("No results returned");
+      if (!user || user.length === 0) throw new Error();
       handle200(res, user);
-    } catch (err) {
-      handle404(res, err);
+    } catch {
+      handle404(res);
     }
   });
 
   router.route("/users/:id").put(async function (req, res) {
     try {
       const checkUser = await User.findById(req.params.id);
-      if (!checkUser) throw new Error("User not found");
+      if (!checkUser) throw new Error();
       const replacedUser = await User.findOneAndReplace(
         { _id: req.params.id },
         req.body
@@ -76,8 +76,8 @@ module.exports = function (router) {
       if (req.params.pendingTasks && req.params.pendingTasks.length !== 0)
         await Task.deleteMany({ _id: { $in: replacedUser.pendingTasks } });
       handleReplace(res, replacedUser);
-    } catch (err) {
-      handle404(res, err);
+    } catch {
+      handle404(res);
     }
   });
 
@@ -86,12 +86,13 @@ module.exports = function (router) {
       const cascadeTaskDelete = await User.findById(req.params.id).select({
         pendingTasks: 1,
       });
-      await Task.deleteMany({ _id: { $in: cascadeTaskDelete.pendingTasks } });
+      if (cascadeTaskDelete && cascadeTaskDelete.length !== 0)
+        await Task.deleteMany({ _id: { $in: cascadeTaskDelete.pendingTasks } });
       const user = await User.findByIdAndDelete(req.params.id);
-      if (!user || user.length === 0) throw new Error("No results returned.");
+      if (!user || user.length === 0) throw new Error();
       handleDelete(res);
-    } catch (err) {
-      handle404(res, err);
+    } catch {
+      handle404(res);
     }
   });
 

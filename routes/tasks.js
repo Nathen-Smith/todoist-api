@@ -40,8 +40,7 @@ module.exports = function (router) {
       }
       query.exec(function (err, tasksQuery) {
         if (err) handle400(res, err);
-        else if (!tasksQuery || tasksQuery.length === 0)
-          handle404(res, "No results returned.");
+        else if (!tasksQuery || tasksQuery.length === 0) handle404(res);
         else handle200(res, tasksQuery);
       });
     } else {
@@ -77,18 +76,17 @@ module.exports = function (router) {
   router.route("/tasks/:id").get(async function (req, res) {
     try {
       const task = await Task.findById(req.params.id);
-      if (!task || task.length === 0) throw new Error("No results returned.");
+      if (!task || task.length === 0) throw new Error();
       handle200(res, task);
-    } catch (err) {
-      handle404(res, err);
+    } catch {
+      handle404(res);
     }
   });
 
   router.route("/tasks/:id").put(async function (req, res) {
     try {
       const checkTask = await Task.findById(req.params.id);
-      if (!checkTask || checkTask.length === 0)
-        throw new Error("Task not found");
+      if (!checkTask || checkTask.length === 0) throw new Error();
       const replacedTask = await Task.findOneAndReplace(
         { _id: req.params.id },
         req.body
@@ -104,18 +102,18 @@ module.exports = function (router) {
           hjhj,
         });
       handleReplace(res, replacedTask);
-    } catch (err) {
-      handle404(res, err);
+    } catch {
+      handle404(res);
     }
   });
 
   router.route("/tasks/:id").delete(async function (req, res) {
     try {
       const task = await Task.findByIdAndDelete(req.params.id);
-      if (!task || task.length === 0) throw new Error("No results returned.");
+      if (!task || task.length === 0) throw new Error();
       handleDelete(res);
-    } catch (err) {
-      handle404(res, err);
+    } catch {
+      handle404(res);
     }
   });
 
