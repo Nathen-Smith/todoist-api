@@ -21,8 +21,8 @@ function handle500(res, err) {
   res.status(500).json(buildRes("SERVER ERROR", err));
 }
 
-function handle404(res) {
-  res.status(404).json(buildRes("NOT FOUND", ""));
+function handle404(res, err) {
+  res.status(404).json(buildRes("NOT FOUND", err));
 }
 
 function handle400(res, err) {

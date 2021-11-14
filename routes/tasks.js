@@ -1,4 +1,5 @@
 const { Task } = require("../models/task");
+const { User } = require("../models/user");
 const {
   buildQuery,
   handle500,
@@ -39,7 +40,8 @@ module.exports = function (router) {
       }
       query.exec(function (err, tasksQuery) {
         if (err) handle400(res, err);
-        else if (!tasksQuery || tasksQuery.length === 0) handle404(res);
+        else if (!tasksQuery || tasksQuery.length === 0)
+          handle404(res, "No results returned.");
         else handle200(res, tasksQuery);
       });
     } else {
@@ -57,6 +59,15 @@ module.exports = function (router) {
     try {
       const newTask = getParams(req.body);
       const createdTask = await Task.create(newTask);
+      // cascade create to assigned user pendingTasks!
+      if (
+        createdTask.assignedUser &&
+        createdTask.assignedUser.length !== 0 &&
+        !createdTask.completed
+      )
+        await User.findByIdAndUpdate(createdTask.assignedUser, {
+          $push: { pendingTasks: createdTask._id },
+        });
       handle201(res, createdTask);
     } catch (err) {
       handle400(res, err);
@@ -66,33 +77,45 @@ module.exports = function (router) {
   router.route("/tasks/:id").get(async function (req, res) {
     try {
       const task = await Task.findById(req.params.id);
+      if (!task || task.length === 0) throw new Error("No results returned.");
       handle200(res, task);
-    } catch {
-      handle404(res);
+    } catch (err) {
+      handle404(res, err);
     }
   });
 
   router.route("/tasks/:id").put(async function (req, res) {
     try {
       const checkTask = await Task.findById(req.params.id);
-      if (!checkTask) handle404(res);
+      if (!checkTask || checkTask.length === 0)
+        throw new Error("Task not found");
       const replacedTask = await Task.findOneAndReplace(
         { _id: req.params.id },
         req.body
       );
+      // cascade to assigned user!
+      if (
+        req.params.assignedUser &&
+        req.params.assignedUser.length !== 0 &&
+        !req.params.completed
+      )
+        await User.findByIdAndUpdate(req.params.assignedUser, {
+          $push: { pendingTasks: req.params._id },
+          hjhj,
+        });
       handleReplace(res, replacedTask);
     } catch (err) {
-      handle400(res, err);
+      handle404(res, err);
     }
   });
 
   router.route("/tasks/:id").delete(async function (req, res) {
     try {
       const task = await Task.findByIdAndDelete(req.params.id);
-      if (!task || task.length === 0) throw new Error();
+      if (!task || task.length === 0) throw new Error("No results returned.");
       handleDelete(res);
-    } catch {
-      handle404(res);
+    } catch (err) {
+      handle404(res, err);
     }
   });
 
