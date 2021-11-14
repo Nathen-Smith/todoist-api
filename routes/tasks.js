@@ -58,15 +58,7 @@ module.exports = function (router) {
     try {
       const newTask = getParams(req.body);
       const createdTask = await Task.create(newTask);
-      // cascade create to assigned user pendingTasks!
-      if (
-        createdTask.assignedUser &&
-        createdTask.assignedUser.length !== 0 &&
-        !createdTask.completed
-      )
-        await User.findByIdAndUpdate(createdTask.assignedUser, {
-          $push: { pendingTasks: createdTask._id },
-        });
+      // do not cascade create
       handle201(res, createdTask);
     } catch (err) {
       handle400(res, err);
@@ -91,16 +83,6 @@ module.exports = function (router) {
         { _id: req.params.id },
         req.body
       );
-      // cascade to assigned user!
-      if (
-        req.params.assignedUser &&
-        req.params.assignedUser.length !== 0 &&
-        !req.params.completed
-      )
-        await User.findByIdAndUpdate(req.params.assignedUser, {
-          $push: { pendingTasks: req.params._id },
-          hjhj,
-        });
       handleReplace(res, replacedTask);
     } catch {
       handle404(res);
@@ -111,6 +93,14 @@ module.exports = function (router) {
     try {
       const task = await Task.findByIdAndDelete(req.params.id);
       if (!task || task.length === 0) throw new Error();
+      if (task.assignedUser && task.assignedUser.length !== 0) {
+        console.log(task);
+        // remove this task from users pending tasks array
+        await User.findByIdAndUpdate(task.assignedUser, {
+          $pull: { pendingTasks: task._id },
+        });
+      }
+      console.log(task);
       handleDelete(res);
     } catch {
       handle404(res);

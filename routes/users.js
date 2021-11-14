@@ -72,9 +72,6 @@ module.exports = function (router) {
         { _id: req.params.id },
         req.body
       );
-      // cascade deletes
-      if (req.params.pendingTasks && req.params.pendingTasks.length !== 0)
-        await Task.deleteMany({ _id: { $in: replacedUser.pendingTasks } });
       handleReplace(res, replacedUser);
     } catch {
       handle404(res);
@@ -83,11 +80,14 @@ module.exports = function (router) {
 
   router.route("/users/:id").delete(async function (req, res) {
     try {
-      const cascadeTaskDelete = await User.findById(req.params.id).select({
+      const taskUnAssign = await User.findById(req.params.id).select({
         pendingTasks: 1,
       });
-      if (cascadeTaskDelete && cascadeTaskDelete.length !== 0)
-        await Task.deleteMany({ _id: { $in: cascadeTaskDelete.pendingTasks } });
+      if (taskUnAssign.pendingTasks && taskUnAssign.pendingTasks.length !== 0)
+        await Task.updateMany(
+          { _id: { $in: taskUnAssign.pendingTasks } },
+          { assignedUser: "", assignedUserName: "unassigned" }
+        );
       const user = await User.findByIdAndDelete(req.params.id);
       if (!user || user.length === 0) throw new Error();
       handleDelete(res);
