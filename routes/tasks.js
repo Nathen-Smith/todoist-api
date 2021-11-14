@@ -34,6 +34,9 @@ module.exports = function (router) {
     if (req.query) {
       // query params for GET tasks
       const query = buildQuery(Task, req.query);
+      if (!req.query.limit) {
+        query.limit(100);
+      }
       query.exec(function (err, tasksQuery) {
         if (err) handle400(res, err);
         else if (!tasksQuery || tasksQuery.length === 0) handle404(res);
