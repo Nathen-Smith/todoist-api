@@ -1,12 +1,11 @@
-# MP #3: APIed Piper
-### Due: November 10th, 2021, 11.59PM CDT
+# Todoist API Clone
 
 ## Table of Contents
 1. [Assignment](#assignment)
-2. [Getting Started](#getting-started)
+2. [Running Instructions](#running-instructions)
 3. [Tips](#tips)
 
-## 1. Assignment
+## 1. Assignment<a name="assignment"></a>
 
 **The Basic Goal** : Create an API for a task management / todo list.
 
@@ -107,7 +106,7 @@ Here is the Task Schema:
     - Multiple users with the same email cannot exist.
     - Tasks cannot be created (or updated) without a name or a deadline. All other fields that the user did not specify should be set to reasonable values.
 
-## 2. Getting Started
+## 2. Running Instructions<a name="running-instructions"></a>
 1. Clone the repository:
 `git clone https://gitlab.com/uiuc-web-programming/mp3.git mp3`, then `cd mp3`
 2. Install dependencies:
@@ -117,7 +116,7 @@ Here is the Task Schema:
 `nodemon --exec node server.js` to automatically restart the server on save.
 
 
-## 3. Tips
+## 3. Tips<a name="tips"></a>
   - Start early!
   - Please DO NOT delete the `.gitignore file` from the project, you will lose 1% point 
   - Check out [Postman](https://www.getpostman.com/postman) to your API
