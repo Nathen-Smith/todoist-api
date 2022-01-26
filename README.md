@@ -5,8 +5,6 @@
 1. [Assignment](#assignment)
 2. [Getting Started](#getting-started)
 3. [Tips](#tips)
-4. [Rules](#rules)
-5. [Submission Details](#submission-details)
 
 ## 1. Assignment
 
@@ -148,20 +146,3 @@ Once again, change the url and port number to match your own running api server.
 
 Contains sample task descriptions. Edit if you want, I don't care.  
 
-## Rules
-1. This is an individual assignment. No collaboration is permitted.
-2. It is not permitted to copy/paste code that is not your own. You are, however, free to look at different code sources for inspiration and clarity. All sources (code as well as reading material) that you reference to complete this assignment must be declared in the submission.
-3. If you think something you’re doing might not be acceptable, please ask on Piazza.
-
-
-## Submission Details
-Here's what you will need to submit:
-1. Create a private repository on GitLab. Make sure "Initialize this repository with a README" is not checked.
-2. Change the remote url for the mp3 directory to the url of the new private repository you created.
-```
-git remote rename origin old-origin
-git remote add origin git@gitlab.com:<your-gitlab-username>/mp3.git
-```
-3. Commit and push your local changes to this new repository.
-4. Invite `uiucwp` as a collaborator. This should be as a **reporter**, not as a *guest*, otherwise we can't see your code.
-5. Fill out and submit the form [Submission Form](https://forms.gle/ARkKhDApLCZc6Kgi6)
